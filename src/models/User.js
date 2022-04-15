@@ -24,8 +24,8 @@ const UserSchema = mongoose.Schema({
         default: 0,
     },
     currentClass: {
-        type: String,
-        default: "https://www.youtube.com/embed/bn3XrkDaqYE",
+        type: Number,
+        default: 0,
     },
     admin: {
         type: Boolean,
