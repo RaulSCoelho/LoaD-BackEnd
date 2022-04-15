@@ -47,11 +47,25 @@ router.post('/login', async (req, res) => {
 
     //Create and assign a token
     if (user.admin) {
-        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_ADMIN_SECRET)
-        res.header('adminToken', token).send(token)
+        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_ADMIN_SECRET, {
+            expiresIn: 108000,
+        })
+
+        res.cookie('adminToken', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+        }).send(token)
     } else {
-        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
-        res.header('authToken', token).send(token)
+        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
+            expiresIn: 108000,
+        })
+
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+        }).send(token)
     }
 })
 
