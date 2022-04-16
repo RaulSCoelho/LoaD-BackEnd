@@ -2,9 +2,9 @@ const router = require('express').Router()
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { registerValidation } = require('../validation')
 const auth = require('../middlewares/verifyToken')
 const adminAuth = require('../middlewares/verifyAdminToken')
+const { registerValidation } = require('../validation')
 
 //Register a user
 router.post('/register', adminAuth, async (req, res) => {
@@ -24,7 +24,8 @@ router.post('/register', adminAuth, async (req, res) => {
 
     const user = new User({
         username: req.body.username,
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
+        fullname: req.body.fullname,
         password: hashedPassword,
         admin: req.body.admin
     })
@@ -47,25 +48,25 @@ router.post('/login', async (req, res) => {
 
     //Create and assign a token
     if (user.admin) {
-        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_ADMIN_SECRET, {
+        const token = jwt.sign({ user: user }, process.env.TOKEN_ADMIN_SECRET, {
             expiresIn: 108000,
         })
 
         res.cookie('adminToken', token, {
             httpOnly: true,
-            secure: true,
             sameSite: "none",
-        }).send(token)
+            secure: true,
+        }).send("Logged In")
     } else {
-        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
+        const token = jwt.sign({ user: user }, process.env.TOKEN_SECRET, {
             expiresIn: 108000,
         })
 
         res.cookie('authToken', token, {
             httpOnly: true,
-            secure: true,
             sameSite: "none",
-        }).send(token)
+            secure: true,
+        }).send("Logged In")
     }
 })
 

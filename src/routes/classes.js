@@ -7,7 +7,7 @@ const adminAuth = require('../middlewares/verifyAdminToken')
 router.get('/', auth, async (req, res) => {
     try {
         const modules = await Module.find()
-        res.send(modules)
+        res.send({modules: modules, user: req.user})
     } catch (err) {
         res.status(400).send(err)
     }
