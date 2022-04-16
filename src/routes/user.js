@@ -70,6 +70,23 @@ router.post('/login', async (req, res) => {
     }
 })
 
+//Logout
+router.get('/logout', auth, (req, res) => {
+    try {
+        return res.cookie('adminToken', "", {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        }).cookie('authToken', "", {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        }).send("Logged Out")
+    } catch (err) {
+        res.status(400).send(err)
+    }
+})
+
 //Get all the users
 router.get('/', auth, async (req, res) => {
     try {
