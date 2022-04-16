@@ -13,12 +13,11 @@ mongoose.connect(process.env.DB_CONNECT,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-    },
-    () => console.log('connected to DB http://localhost:3001/')
+    }
 )
 
 //Middlewares
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
+app.use(cors({ origin: 'https://lifeofadream.vercel.app', credentials: true }))
 app.use(express.json())
 app.use(cookieParser())
 
