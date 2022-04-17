@@ -54,7 +54,6 @@ router.post('/login', async (req, res) => {
 
         res.cookie('adminToken', token, {
             httpOnly: true,
-            sameSite: "none",
             secure: true,
         }).send("Logged In")
     } else {
@@ -64,7 +63,6 @@ router.post('/login', async (req, res) => {
 
         res.cookie('authToken', token, {
             httpOnly: true,
-            sameSite: "none",
             secure: true,
         }).send("Logged In")
     }
@@ -75,11 +73,9 @@ router.get('/logout', auth, (req, res) => {
     try {
         res.cookie('adminToken', "", {
             httpOnly: true,
-            sameSite: "none",
             secure: true,
         }).cookie('authToken', "", {
             httpOnly: true,
-            sameSite: "none",
             secure: true,
         }).send("Logged Out")
     } catch (err) {
