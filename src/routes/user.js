@@ -71,7 +71,7 @@ router.post('/login', async (req, res) => {
 //Logout
 router.post('/logout', (req, res) => {
     try {
-        res.send(req.body.teste)
+        res.send(req.body.value)
     } catch (err) {
         res.status(400).send(err)
     }
