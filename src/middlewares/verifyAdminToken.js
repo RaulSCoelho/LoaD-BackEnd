@@ -8,7 +8,6 @@ module.exports = function (req, res, next) {
 
     try {
         const verified = jwt.verify(adminToken, secret)
-        //req.user is sending the user _id 
         req.user = verified
         next()
     } catch (err) {
