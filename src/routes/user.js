@@ -38,7 +38,7 @@ router.post('/register', adminAuth, async (req, res) => {
 })
 
 //Login
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     //Check if the user is already in the DB
     const user = await User.findOne({ username: req.body.username })
     if (!user) return res.status(400).send('Invalid username or password')
