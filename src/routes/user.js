@@ -71,7 +71,7 @@ router.post('/login', async (req, res) => {
 })
 
 //Logout
-router.get('/logout', auth, (req, res) => {
+router.get('/logout', (req, res) => {
     try {
         return res.cookie('adminToken', "", {
             httpOnly: true,
