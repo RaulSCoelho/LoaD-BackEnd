@@ -70,13 +70,7 @@ router.post('/login', async (req, res) => {
 
 //Logout
 router.get('/logout', async (req, res) => {
-    const user = await User.findOne({ username: req.body.value })
-    if (!user) return res.status(400).send('Invalid username or password')
-    try {
-        res.send("Logged Out")
-    } catch (err) {
-        res.status(400).send(err)
-    }
+    res.send("Logged Out")
 })
 
 //Get all the users
