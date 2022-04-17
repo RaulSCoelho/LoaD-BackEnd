@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
 router.get('/', auth, async (req, res) => {
     try {
         const users = await User.find()
-        res.send(users)
+        res.send("user")
     } catch (err) {
         res.status(400).send(err)
     }
