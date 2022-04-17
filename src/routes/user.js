@@ -2,9 +2,9 @@ const router = require('express').Router()
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { registerValidation } = require('../validation')
 const auth = require('../middlewares/verifyToken')
 const adminAuth = require('../middlewares/verifyAdminToken')
-const { registerValidation } = require('../validation')
 
 //Register a user
 router.post('/register', adminAuth, async (req, res) => {
@@ -54,6 +54,7 @@ router.post('/login', async (req, res) => {
 
         res.cookie('adminToken', token, {
             httpOnly: true,
+            sameSite: "none",
             secure: true,
         }).send("Logged In")
     } else {
@@ -63,24 +64,23 @@ router.post('/login', async (req, res) => {
 
         res.cookie('authToken', token, {
             httpOnly: true,
+            sameSite: "none",
             secure: true,
         }).send("Logged In")
     }
 })
 
 //Logout
-router.get('/logout', auth, (req, res) => {
-    try {
-        res.cookie('adminToken', "", {
-            httpOnly: true,
-            secure: true,
-        }).cookie('authToken', "", {
-            httpOnly: true,
-            secure: true,
-        }).send("Logged Out")
-    } catch (err) {
-        res.status(400).send(err)
-    }
+router.get('/logout', (req, res) => {
+    res.cookie('adminToken', "", {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+    }).cookie('authToken', "", {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+    }).send("Logged Out")
 })
 
 //Get all the users
