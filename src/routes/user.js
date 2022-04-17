@@ -71,9 +71,17 @@ router.post('/login', async (req, res) => {
 })
 
 //Logout
-router.get('/logout', (req, res) => {
+router.get('/logout', auth, (req, res) => {
     try {
-        return res.send("Logged Out")
+        res.cookie('adminToken', "", {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        }).cookie('authToken', "", {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        }).send("Logged Out")
     } catch (err) {
         res.status(400).send(err)
     }
