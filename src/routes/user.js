@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
 })
 
 //Logout
-router.post('/logout', (req, res) => {
+router.post('/logout', async (req, res) => {
     const user = await User.findOne({ username: req.body.value })
     if (!user) return res.status(400).send('Invalid username or password')
     try {
