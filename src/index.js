@@ -20,7 +20,7 @@ mongoose.connect(process.env.DB_CONNECT,
 
 //Middlewares
 app.use(cookieParser())
-app.use(cors({ origin: 'http://172.22.144.1:3000', credentials: true }))
+app.use(cors({ origin: 'https://lifeofadream.vercel.app', credentials: true }))
 app.use(express.json())
 
 //Route Middlewares
