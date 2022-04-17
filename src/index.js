@@ -21,9 +21,9 @@ mongoose.connect(process.env.DB_CONNECT,
 //Middlewares
 app.use(cors({
     origin: [
-        'https://lifeofadream.vercel.app',
-        'http://localhost:3000',
-        'http://192.168.10.10:3000'
+        'https://lifeofadream.vercel.app/',
+        'http://localhost:3000/',
+        'http://192.168.10.10:3000/'
     ], credentials: true
 }))
 app.use(express.json())
