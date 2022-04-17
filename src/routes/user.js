@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 })
 
 //Get user by Username
-router.get('/:username', auth, async (req, res) => {
+router.get('/:username', async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username })
         res.send(user)
