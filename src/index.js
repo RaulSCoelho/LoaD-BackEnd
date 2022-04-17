@@ -8,6 +8,7 @@ require('dotenv/config')
 
 //Import Routes
 const userRoute = require('./routes/user')
+const logoutRoute = require('./routes/logout')
 const classesRoute = require('./routes/classes')
 
 //Connect to DB
@@ -31,6 +32,7 @@ app.use(cookieParser())
 
 //Route Middlewares
 app.use('/user', userRoute)
+app.use('/logout', logoutRoute)
 app.use('/classes', classesRoute)
 
 app.listen(process.env.PORT || 3001)

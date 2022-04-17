@@ -68,11 +68,6 @@ router.post('/login', async (req, res) => {
     }
 })
 
-//Logout
-router.get('/logout', (req, res) => {
-    res.send("Logged Out")
-})
-
 //Get all the users
 router.get('/', auth, async (req, res) => {
     try {
