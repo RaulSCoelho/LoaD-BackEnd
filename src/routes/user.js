@@ -54,6 +54,7 @@ router.post('/login', async (req, res) => {
 
         res.cookie('adminToken', token, {
             httpOnly: true,
+            sameSite: "none",
             secure: true,
         }).send("Logged In")
     } else {

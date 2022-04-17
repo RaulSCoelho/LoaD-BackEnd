@@ -3,7 +3,9 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require("cors")
 const cookieParser = require('cookie-parser')
+
 require('dotenv/config')
+
 //Import Routes
 const userRoute = require('./routes/user')
 const classesRoute = require('./routes/classes')
@@ -17,7 +19,13 @@ mongoose.connect(process.env.DB_CONNECT,
 )
 
 //Middlewares
-app.use(cors({ origin: ['https://lifeofadream.vercel.app', 'http://localhost:3000', 'http://192.168.10.10:3000'], credentials: true }))
+app.use(cors({
+    origin: [
+        'https://lifeofadream.vercel.app',
+        'http://localhost:3000',
+        'http://192.168.10.10:3000'
+    ], credentials: true
+}))
 app.use(express.json())
 app.use(cookieParser())
 
