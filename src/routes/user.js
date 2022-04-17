@@ -69,9 +69,9 @@ router.post('/login', async (req, res) => {
 })
 
 //Logout
-router.post('/logout', (req, res) => {
+router.post('/logout', auth, (req, res) => {
     try {
-        res.send("Logged Out")
+        res.send(req.body.teste)
     } catch (err) {
         res.status(400).send(err)
     }
