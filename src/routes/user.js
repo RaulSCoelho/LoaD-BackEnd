@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
     //Create and assign a token
     if (user.admin) {
         const token = jwt.sign({ user: user }, process.env.TOKEN_ADMIN_SECRET, {
-            expiresIn: 108000,
+            expiresIn: 108000, // 30 hours
         })
 
         res.cookie('adminToken', token, {
@@ -60,7 +60,7 @@ router.post('/login', async (req, res) => {
         }).send("Logged In")
     } else {
         const token = jwt.sign({ user: user }, process.env.TOKEN_SECRET, {
-            expiresIn: 108000,
+            expiresIn: 108000, // 30 hours
         })
 
         res.cookie('authToken', token, {
