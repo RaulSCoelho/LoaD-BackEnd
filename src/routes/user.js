@@ -7,7 +7,7 @@ const auth = require('../middlewares/verifyToken')
 const { registerValidation } = require('../validation')
 
 //Get all the users
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const users = await User.find()
         res.send(users)
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 })
 
 //Get user by Username
-router.get('/:username', async (req, res) => {
+router.get('/:username', auth, async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username })
         res.send(user)
@@ -72,19 +72,35 @@ router.post('/login', async (req, res) => {
             expiresIn: 108000,
         })
 
-        res.header('adminToken', token).send("Logged In")
+        res.cookie('adminToken', token, {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        }).send("Logged In")
     } else {
         const token = jwt.sign({ user: user }, process.env.TOKEN_SECRET, {
             expiresIn: 108000,
         })
 
-        res.header('authToken', token).send("Logged In")
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        }).send("Logged In")
     }
 })
 
 //Logout
 router.get('/logout', (req, res) => {
-    res.header('adminToken', "").header('authToken', "").send("Logged Out")
+    res.cookie('adminToken', "", {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+    }).cookie('authToken', "", {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+    }).send("Logged Out")
 })
 
 
