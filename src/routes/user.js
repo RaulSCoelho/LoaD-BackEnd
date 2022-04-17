@@ -72,21 +72,13 @@ router.post('/login', async (req, res) => {
             expiresIn: 108000,
         })
 
-        res.cookie('adminToken', token, {
-            httpOnly: true,
-            sameSite: "none",
-            secure: true,
-        }).send("Logged In")
+        res.cookie('adminToken', token).send("Logged In")
     } else {
         const token = jwt.sign({ user: user }, process.env.TOKEN_SECRET, {
             expiresIn: 108000,
         })
 
-        res.cookie('authToken', token, {
-            httpOnly: true,
-            sameSite: "none",
-            secure: true,
-        }).send("Logged In")
+        res.cookie('authToken', token).send("Logged In")
     }
 })
 
