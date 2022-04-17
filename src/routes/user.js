@@ -73,7 +73,11 @@ router.post('/login', async (req, res) => {
 //Logout
 router.get('/logout', auth, (req, res) => {
     try {
-        return res.cookie('adminToken', "", {
+        return res.cookie('adminToken', " ", {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        }).cookie('authToken', " ", {
             httpOnly: true,
             sameSite: "none",
             secure: true,
