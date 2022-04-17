@@ -72,35 +72,19 @@ router.post('/login', async (req, res) => {
             expiresIn: 108000,
         })
 
-        res.cookie('adminToken', token, {
-            httpOnly: true,
-            secure: true,
-            maxAge: 3600
-        }).send("Logged In")
+        res.header('adminToken', token).send("Logged In")
     } else {
         const token = jwt.sign({ user: user }, process.env.TOKEN_SECRET, {
             expiresIn: 108000,
         })
 
-        res.cookie('authToken', token, {
-            httpOnly: true,
-            secure: true,
-            maxAge: 3600
-        }).send("Logged In")
+        res.header('authToken', token).send("Logged In")
     }
 })
 
 //Logout
 router.get('/logout', (req, res) => {
-    res.cookie('adminToken', "", {
-        httpOnly: true,
-        secure: true,
-        maxAge: 3600
-    }).cookie('authToken', "", {
-        httpOnly: true,
-        secure: true,
-        maxAge: 3600
-    }).send("Logged Out")
+    res.header('adminToken', "").header('authToken', "").send("Logged Out")
 })
 
 

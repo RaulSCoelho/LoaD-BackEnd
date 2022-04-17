@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = function (req, res, next) {
-    let authToken = req.cookies.authToken
-    let adminToken = req.cookies.adminToken
+    let authToken = req.header('authToken')
+    let adminToken = req.header('adminToken')
     let token = authToken
     let secret = process.env.TOKEN_SECRET
 
