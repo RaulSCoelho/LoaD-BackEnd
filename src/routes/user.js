@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
 })
 
 //Logout
-router.get('/logout', async (req, res) => {
+router.get('/logout', (req, res) => {
     res.send("Logged Out")
 })
 
