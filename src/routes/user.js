@@ -71,7 +71,7 @@ router.post('/login', async (req, res) => {
 //Get all the users
 router.get('/', auth, async (req, res) => {
     try {
-        res.send({message: "teste"})
+        res.send({message: "teste2"})
     } catch (err) {
         res.status(400).send(err)
     }
