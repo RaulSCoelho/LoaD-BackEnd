@@ -56,6 +56,7 @@ router.post('/login', async (req, res) => {
             httpOnly: true,
             sameSite: "none",
             secure: true,
+            maxAge: 30 * 60 * 60 * 1000, // 30 hours
         }).send("Logged In")
     } else {
         const token = jwt.sign({ user: user }, process.env.TOKEN_SECRET, {
@@ -66,6 +67,7 @@ router.post('/login', async (req, res) => {
             httpOnly: true,
             sameSite: "none",
             secure: true,
+            maxAge: 30 * 60 * 60 * 1000, // 30 hours
         }).send("Logged In")
     }
 })
