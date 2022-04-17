@@ -7,7 +7,7 @@ const auth = require('../middlewares/verifyToken')
 const { registerValidation } = require('../validation')
 
 //Get all the users
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const users = await User.find()
         res.send(users)
