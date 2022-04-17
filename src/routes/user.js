@@ -72,13 +72,21 @@ router.post('/login', async (req, res) => {
             expiresIn: 108000,
         })
 
-        res.cookie('adminToken', token).send("Logged In")
+        res.cookie('adminToken', token, {
+            httpOnly: true,
+            secure: true,
+            maxAge: 3600
+        }).send("Logged In")
     } else {
         const token = jwt.sign({ user: user }, process.env.TOKEN_SECRET, {
             expiresIn: 108000,
         })
 
-        res.cookie('authToken', token).send("Logged In")
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: true,
+            maxAge: 3600
+        }).send("Logged In")
     }
 })
 
@@ -86,12 +94,12 @@ router.post('/login', async (req, res) => {
 router.get('/logout', (req, res) => {
     res.cookie('adminToken', "", {
         httpOnly: true,
-        sameSite: "none",
         secure: true,
+        maxAge: 3600
     }).cookie('authToken', "", {
         httpOnly: true,
-        sameSite: "none",
         secure: true,
+        maxAge: 3600
     }).send("Logged Out")
 })
 
