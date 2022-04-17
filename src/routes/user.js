@@ -1,10 +1,30 @@
 const router = require('express').Router()
 const User = require('../models/User')
-const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { registerValidation } = require('../validation')
-const auth = require('../middlewares/verifyToken')
+const bcrypt = require('bcryptjs')
 const adminAuth = require('../middlewares/verifyAdminToken')
+const auth = require('../middlewares/verifyToken')
+const { registerValidation } = require('../validation')
+
+//Get all the users
+router.get('/', auth, async (req, res) => {
+    try {
+        const users = await User.find()
+        res.send(users)
+    } catch (err) {
+        res.status(400).send(err)
+    }
+})
+
+//Get user by Username
+router.get('/:username', auth, async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.params.username })
+        res.send(user)
+    } catch (err) {
+        res.status(400).send(err)
+    }
+})
 
 //Register a user
 router.post('/register', adminAuth, async (req, res) => {
@@ -83,25 +103,6 @@ router.get('/logout', (req, res) => {
     }).send("Logged Out")
 })
 
-//Get all the users
-router.get('/', auth, async (req, res) => {
-    try {
-        const users = await User.find()
-        res.send(users)
-    } catch (err) {
-        res.status(400).send(err)
-    }
-})
-
-//Get user by Username
-router.get('/:username', auth, async (req, res) => {
-    try {
-        const user = await User.findOne({ username: req.params.username })
-        res.send(user)
-    } catch (err) {
-        res.status(400).send(err)
-    }
-})
 
 //Update a user
 router.patch('/update/:username', adminAuth, async (req, res) => {
