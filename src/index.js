@@ -8,7 +8,6 @@ require('dotenv/config')
 
 //Import Routes
 const userRoute = require('./routes/user')
-const logoutRoute = require('./routes/logout')
 const classesRoute = require('./routes/classes')
 
 //Connect to DB
@@ -22,9 +21,9 @@ mongoose.connect(process.env.DB_CONNECT,
 //Middlewares
 app.use(cors({
     origin: [
-        'https://lifeofadream.vercel.app/',
-        'http://localhost:3000/',
-        'http://192.168.10.10:3000/'
+        'https://lifeofadream.vercel.app',
+        'http://localhost:3000',
+        'http://192.168.10.10:3000'
     ], credentials: true
 }))
 app.use(express.json())
@@ -32,7 +31,6 @@ app.use(cookieParser())
 
 //Route Middlewares
 app.use('/user', userRoute)
-app.use('/logout', logoutRoute)
 app.use('/classes', classesRoute)
 
 app.listen(process.env.PORT || 3001)

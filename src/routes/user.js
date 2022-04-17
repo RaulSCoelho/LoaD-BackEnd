@@ -68,10 +68,26 @@ router.post('/login', async (req, res) => {
     }
 })
 
+//Logout
+router.get('/logout', auth, (req, res) => {
+    try {
+        res.cookie('adminToken', "", {
+            httpOnly: true,
+            secure: true,
+        }).cookie('authToken', "", {
+            httpOnly: true,
+            secure: true,
+        }).send("Logged Out")
+    } catch (err) {
+        res.status(400).send(err)
+    }
+})
+
 //Get all the users
 router.get('/', auth, async (req, res) => {
     try {
-        res.send({message: "teste2"})
+        const users = await User.find()
+        res.send(users)
     } catch (err) {
         res.status(400).send(err)
     }
