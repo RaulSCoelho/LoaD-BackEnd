@@ -3,11 +3,12 @@ const router = express.Router()
 const Module = require('../models/Module')
 const auth = require('../middlewares/verifyToken')
 const adminAuth = require('../middlewares/verifyAdminToken')
+const { addModuleValidation } = require('../validateClasses')
 
 router.get('/', auth, async (req, res) => {
     try {
         const modules = await Module.find()
-        res.send({modules: modules, user: req.user})
+        res.send({ modules: modules, jwt: req.user })
     } catch (err) {
         res.status(400).send(err)
     }
@@ -23,12 +24,22 @@ router.get('/:module', auth, async (req, res) => {
 })
 
 router.post('/', adminAuth, async (req, res) => {
+    //Validate module
+    const { error } = addModuleValidation(req.body)
+    if (error) return res.status(400).send(error.details[0].message)
+
+    //Check if the module is already in the DB
+    const moduleExist = await Module.findOne({ module: req.body.module })
+    if (moduleExist) return res.status(400).send('Module already exists')
+    if (req.body.module == 0) return res.status(400).send('Choose another number for the module')
+
     const module = new Module({
         module: req.body.module,
         videos: req.body.videos,
         titles: req.body.titles,
         thumbnails: req.body.thumbnails
     })
+
     try {
         const savedModule = await module.save()
         res.send(savedModule)
